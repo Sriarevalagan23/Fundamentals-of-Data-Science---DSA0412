@@ -1,0 +1,16 @@
+import pandas as pd
+from collections import Counter
+import re
+
+df = pd.read_csv('customer_reviews.csv')  
+
+if 'review' in df.columns:
+    
+    all_reviews = ' '.join(df['review'].dropna().astype(str))
+    words = re.findall(r'\b\w+\b', all_reviews.lower()) 
+    word_freq = Counter(words)
+    print("Top 20 Most Frequent Words in Customer Reviews:\n")
+    for word, freq in word_freq.most_common(20):
+        print(f"{word}: {freq}")
+else:
+    print("The 'review' column is not present in the dataset.")
