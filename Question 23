@@ -1,0 +1,19 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+from scipy.stats import ttest_ind
+
+df = pd.read_csv("clinical_trial.csv")
+
+control = df[df['group'] == 'control']['result']
+treatment = df[df['group'] == 'treatment']['result']
+
+t_stat, p_value = ttest_ind(treatment, control, equal_var=False)
+
+print(f"T-statistic: {t_stat:.4f}")
+print(f"P-value: {p_value:.4f}")
+
+plt.boxplot([control, treatment], labels=['Control', 'Treatment'])
+plt.title(f'Clinical Trial Results\nP-value: {p_value:.4f}')
+plt.ylabel('Effectiveness Score')
+plt.grid(True)
+plt.show()
