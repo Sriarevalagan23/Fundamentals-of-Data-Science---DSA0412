@@ -1,0 +1,22 @@
+import pandas as pd
+import numpy as np
+from scipy import stats
+
+df = pd.read_csv("customer_reviews.csv")
+ratings = df['rating'].dropna().values
+
+confidence_level = float(input("Enter the confidence level (e.g., 95 for 95%): "))
+sample_size = len(ratings)
+sample_mean = np.mean(ratings)
+sample_std = np.std(ratings, ddof=1)
+
+alpha = 1 - (confidence_level / 100)
+z_score = stats.norm.ppf(1 - alpha / 2)
+margin_of_error = z_score * (sample_std / np.sqrt(sample_size))
+
+lower_bound = sample_mean - margin_of_error
+upper_bound = sample_mean + margin_of_error
+
+print(f"\nAverage Rating (Point Estimate): {sample_mean:.2f}")
+print(f"{confidence_level}% Confidence Interval: ({lower_bound:.2f}, {upper_bound:.2f})")
+print(f"Margin of Error: {margin_of_error:.2f}")
