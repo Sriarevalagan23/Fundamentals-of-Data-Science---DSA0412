@@ -1,0 +1,34 @@
+import pandas as pd
+from sklearn.tree import DecisionTreeRegressor, export_text
+from sklearn.preprocessing import LabelEncoder
+
+df = pd.read_csv("used_cars.csv")
+
+le_brand = LabelEncoder()
+le_engine = LabelEncoder()
+
+df['brand_encoded'] = le_brand.fit_transform(df['brand'])
+df['engine_encoded'] = le_engine.fit_transform(df['engine_type'])
+
+X = df[['mileage', 'age', 'brand_encoded', 'engine_encoded']]
+y = df['price']
+
+model = DecisionTreeRegressor()
+model.fit(X, y)
+
+mileage = float(input("Enter mileage of the car: "))
+age = int(input("Enter age of the car: "))
+brand = input("Enter brand of the car: ")
+engine_type = input("Enter engine type of the car: ")
+
+brand_encoded = le_brand.transform([brand])[0]
+engine_encoded = le_engine.transform([engine_type])[0]
+
+new_car = [[mileage, age, brand_encoded, engine_encoded]]
+predicted_price = model.predict(new_car)
+
+print(f"Predicted price for the car: ${predicted_price[0]:.2f}")
+
+tree_rules = export_text(model, feature_names=['mileage', 'age', 'brand_encoded', 'engine_encoded'])
+print("\nDecision path used by CART model:")
+print(tree_rules)
