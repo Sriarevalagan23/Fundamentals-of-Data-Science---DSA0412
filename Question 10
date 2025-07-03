@@ -1,0 +1,26 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+
+sales_data = pd.read_csv('sales_data.csv')
+
+months = sales_data['month']
+sales = sales_data['sales']
+
+plt.figure(figsize=(10, 5))
+plt.plot(months, sales, marker='o', linestyle='-', color='blue')
+plt.title('Monthly Sales - Line Plot')
+plt.xlabel('Month')
+plt.ylabel('Sales')
+plt.grid(True)
+plt.xticks(rotation=45)
+plt.tight_layout()
+plt.show()
+
+plt.figure(figsize=(10, 5))
+plt.bar(months, sales, color='green')
+plt.title('Monthly Sales - Bar Plot')
+plt.xlabel('Month')
+plt.ylabel('Sales')
+plt.xticks(rotation=45)
+plt.tight_layout()
+plt.show()
