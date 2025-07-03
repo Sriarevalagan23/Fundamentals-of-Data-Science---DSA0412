@@ -1,0 +1,23 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+df = pd.read_csv("student_scores.csv")
+
+correlation = df["StudyTime"].corr(df["ExamScore"])
+print(f"Correlation between Study Time and Exam Score: {correlation:.2f}")
+
+plt.figure(figsize=(14, 5))
+
+plt.subplot(1, 2, 1)
+plt.scatter(df["StudyTime"], df["ExamScore"], color='green')
+plt.title("Scatter Plot: Study Time vs Exam Score")
+plt.xlabel("Study Time (hours)")
+plt.ylabel("Exam Score")
+
+plt.subplot(1, 2, 2)
+sns.regplot(x="StudyTime", y="ExamScore", data=df, ci=None, color='blue')
+plt.title("Regression Line: Study Time vs Exam Score")
+
+plt.tight_layout()
+plt.show()
