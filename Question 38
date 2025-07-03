@@ -1,0 +1,19 @@
+import pandas as pd
+
+df = pd.read_csv("temperature_data.csv")
+
+mean_temp = df.mean()
+std_temp = df.std()
+temp_range = df.max() - df.min()
+
+print("Mean Temperature for Each City:")
+print(mean_temp)
+
+print("\nStandard Deviation for Each City:")
+print(std_temp)
+
+city_highest_range = temp_range.idxmax()
+print(f"\nCity with Highest Temperature Range: {city_highest_range} ({temp_range[city_highest_range]:.2f}°)")
+
+city_most_consistent = std_temp.idxmin()
+print(f"City with Most Consistent Temperature: {city_most_consistent} (Std Dev: {std_temp[city_most_consistent]:.2f}°)")
