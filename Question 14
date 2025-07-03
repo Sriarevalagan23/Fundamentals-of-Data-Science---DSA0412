@@ -1,0 +1,10 @@
+import pandas as pd
+
+df = pd.read_csv('sales_data.csv')
+
+if 'age' in df.columns:  
+    age_distribution = df['age'].value_counts().sort_index()
+    print("Frequency Distribution of Customer Ages:\n")
+    print(age_distribution)
+else:
+    print("The 'age' column was not found in the dataset.")
